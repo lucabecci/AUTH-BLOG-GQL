@@ -1,6 +1,6 @@
 import { createConnection } from "typeorm";
 import config from "../config/config";
-
+import path from 'path'
 class Database {
   public async getConnection(): Promise<void> {
     try {
@@ -11,9 +11,11 @@ class Database {
         username: config.DB.USER,
         password: config.DB.PSW,
         database: config.DB.NAME,
+        synchronize: true,
+        logging: true,
+        entities: [path.join(__dirname, "../entities/*.*")]
       });
-
-      console.log("DB is connected");
+      console.log("DB is connected", );
     } catch (e) {
       console.log("DB is not connected");
     }

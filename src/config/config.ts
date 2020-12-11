@@ -16,7 +16,7 @@ export interface IConfig {
 
 export default {
   DB: {
-    NAME: process.env.DB_NAME || "blogtsgql",
+    NAME: process.env.DB_NAME || "gql",
     URI: process.env.DB_URI || "",
     USER: process.env.DB_USER || "postgres",
     PSW: process.env.DB_PSW || "",
