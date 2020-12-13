@@ -1,5 +1,11 @@
 import { Field, ID, ObjectType, Root } from "type-graphql";
-import { PrimaryGeneratedColumn, Column, BaseEntity, Entity, OneToMany } from "typeorm";
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  Entity,
+  OneToMany,
+} from "typeorm";
 import { Post } from "./Post";
 
 @ObjectType()
@@ -30,6 +36,6 @@ export class User extends BaseEntity {
     return `Hi ${parent.username}, welcome to my api gql`;
   }
 
-  @OneToMany(() => Post, post => post.user)
-  posts: Post[]
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 }

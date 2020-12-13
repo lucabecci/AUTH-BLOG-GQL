@@ -19,7 +19,7 @@ export class Post extends BaseEntity {
   @Field()
   @Column("varchar", { length: 20 })
   title: string;
-  
+
   @Field()
   @Column("varchar", { length: 15 })
   tophic: string;
@@ -29,7 +29,7 @@ export class Post extends BaseEntity {
   description: string;
 
   @Field(() => String)
-  @CreateDateColumn({type:'date'})
+  @CreateDateColumn({ type: "date" })
   created: Date;
 
   @ManyToOne(() => User, (user) => user.posts)

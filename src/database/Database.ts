@@ -4,7 +4,7 @@ import path from "path";
 class Database {
   public async getConnection(): Promise<void> {
     let retries = 5;
-    while(retries){
+    while (retries) {
       try {
         await createConnection({
           type: "postgres",
@@ -21,10 +21,10 @@ class Database {
         break;
       } catch (e) {
         console.log(e);
-        retries -= 1
-        console.log('retries:', retries)
+        retries -= 1;
+        console.log("retries:", retries);
         //wait 5 seconds
-        await new Promise(res => setTimeout(res, 5000))
+        await new Promise((res) => setTimeout(res, 5000));
       }
     }
   }
