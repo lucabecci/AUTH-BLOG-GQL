@@ -3,8 +3,8 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server-express";
 import express, { Application } from "express";
 import { buildSchema } from "type-graphql";
-import cors from 'cors'
-import connectRedis from 'connect-redis'
+import cors from "cors";
+import connectRedis from "connect-redis";
 import session from "express-session";
 
 import Database from "./database/Database";
@@ -19,7 +19,7 @@ class Server {
 
     this.dbInit();
     this.gqlInit(this._app);
-    this.configInit()
+    this.configInit();
   }
 
   private async dbInit(): Promise<void> {
@@ -28,23 +28,28 @@ class Server {
 
   private async gqlInit(app: Application): Promise<void> {
     const schema = await buildSchema({
-      resolvers: [__dirname + "/modules/**/*.ts"],
+      resolvers: [__dirname + "/modules/**/*.*"],
     });
 
     const apolloServer = new ApolloServer({
       schema,
-      context: ({ req, res }: any) => ({ req, res })
+      context: ({ req, res }: any) => ({ req, res }),
     });
     apolloServer.applyMiddleware({ app });
   }
 
-  private async configInit(){
+  private async configInit() {
     const RedisStore = connectRedis(session);
 
-    this._app.use((_req, _res, next) => { next(); }, cors({
-      credentials: true,
-      origin: 'http://localhost:3000'
-    }));
+    this._app.use(
+      (_req, _res, next) => {
+        next();
+      },
+      cors({
+        credentials: true,
+        origin: "http://localhost:3000",
+      })
+    );
 
     this._app.use(
       session({
@@ -65,7 +70,6 @@ class Server {
   }
 
   public run(): void {
-    
     this._app.listen(config.PORT, () => {
       console.log("Server on port", config.PORT);
     });

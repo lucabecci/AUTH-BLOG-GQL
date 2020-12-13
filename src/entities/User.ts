@@ -1,36 +1,35 @@
-import {Field, ID, ObjectType, Root} from 'type-graphql'
-import { PrimaryGeneratedColumn, Column, BaseEntity, Entity} from 'typeorm'
+import { Field, ID, ObjectType, Root } from "type-graphql";
+import { PrimaryGeneratedColumn, Column, BaseEntity, Entity, OneToMany } from "typeorm";
+import { Post } from "./Post";
 
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-    @Field(() => ID)
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Field(() => ID)
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Field()
-    @Column()
-    firstName: string;
+  @Field()
+  @Column()
+  firstName: string;
 
-    @Field()
-    @Column()
-    lastName: string;
+  @Column()
+  lastName: string;
 
-    @Field()
-    @Column("varchar", {unique: true})
-    username: string;
+  @Column("varchar", { unique: true })
+  username: string;
 
-    @Field()
-    @Column("text", {unique: true})
-    email: string;
+  @Column("text", { unique: true })
+  email: string;
 
-    @Column()
-    password: string;
+  @Column()
+  password: string;
 
-    @Field()
-    say(@Root() parent: User): string {
-        return `Hi ${parent.username}, welcome to my api gql`
-    }
+  @Field()
+  say(@Root() parent: User): string {
+    return `Hi ${parent.username}, welcome to my api gql`;
+  }
+
+  @OneToMany(() => Post, post => post.user)
+  posts: Post[]
 }
-
-
